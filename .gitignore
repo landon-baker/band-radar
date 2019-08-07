@@ -14,3 +14,6 @@ node_modules
 
 ## bundle ##
 client/dist/bundle.js
+
+server/data.json
+data.json
