@@ -10,6 +10,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     const params = this.getHashParams();
+    window.spotifyToken = params.access_token;
     this.state = {
       loggedIn: !!params.access_token,
       artist: '',
