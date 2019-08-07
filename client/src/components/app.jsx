@@ -2,6 +2,7 @@ import React from 'react';
 import SpotifyWebAPI from 'spotify-web-api-js';
 import axios from 'axios';
 import Login from './login';
+import EventsContainer from './eventsContainer';
 const Spotify = new SpotifyWebAPI();
 
 export default class App extends React.Component {
@@ -9,10 +10,9 @@ export default class App extends React.Component {
     super(props);
     const params = this.getHashParams();
     this.state = {
-      foo: 'bar',
       loggedIn: !!params.access_token,
       user: '',
-      events: {}
+      events: []
     };
     if (this.state.loggedIn) {
       Spotify.setAccessToken(params.access_token);
@@ -54,6 +54,7 @@ export default class App extends React.Component {
             <button onClick={() => this.getEvents()}>
               Get TicketMaster Events
             </button>
+            <EventsContainer events={this.state.events} />
           </div>
         </div>
       );

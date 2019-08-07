@@ -1,14 +1,21 @@
 import React from 'react';
-// import Event from './event';
+import Event from './event';
 
 const EventsContainer = ({ events }) => {
   return (
     <table>
       <thead>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>Name</th>
+        <th>Link</th>
+        <th>Price</th>
       </thead>
+      <tbody>
+        {events.map(event => (
+          <Event event={event} />
+        ))}
+      </tbody>
     </table>
   );
 };
+
+export default EventsContainer;
