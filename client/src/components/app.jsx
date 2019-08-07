@@ -1,5 +1,7 @@
 import React from 'react';
 import SpotifyWebAPI from 'spotify-web-api-js';
+import axios from 'axios';
+import Login from './login';
 const Spotify = new SpotifyWebAPI();
 
 export default class App extends React.Component {
@@ -9,7 +11,8 @@ export default class App extends React.Component {
     this.state = {
       foo: 'bar',
       loggedIn: !!params.access_token,
-      user: ''
+      user: '',
+      events: {}
     };
     if (this.state.loggedIn) {
       Spotify.setAccessToken(params.access_token);
@@ -27,30 +30,30 @@ export default class App extends React.Component {
     return hashParams;
   }
 
+  async getEvents() {
+    let results = await axios.get(`http://localhost:3008/api/events`);
+    const {
+      data: { events }
+    } = results;
+    this.setState({ events });
+  }
+
   getUser() {
     Spotify.getMe().then(results => this.setState({ user: results }));
   }
 
   render() {
     if (!this.state.loggedIn) {
-      return (
-        <form action="http://localhost:8888/login" method="get">
-          <button type="submit">Login with Spotify</button>
-        </form>
-      );
+      return <Login />;
     } else {
       return (
         <div className="wrapper">
           <div className="main">
-            <h2>Hello from React App Component!</h2>
-            <h3>If you see this, that means</h3>
-            <ul>
-              <li>Server is running</li>
-              <li>Webpack ran successfully</li>
-              <li>CSS and JS are bundled together</li>
-            </ul>
-            <h3>Happy Hacking!</h3>
+            <h2>Band Radar</h2>
             <button onClick={() => this.getUser()}>Get User</button>
+            <button onClick={() => this.getEvents()}>
+              Get TicketMaster Events
+            </button>
           </div>
         </div>
       );
