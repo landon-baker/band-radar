@@ -54,10 +54,9 @@ export default class App extends React.Component {
   componentDidMount() {
     document.addEventListener('DOMContentLoaded', function() {
       var elems = document.querySelectorAll('.collapsible');
-      var instances = M.Collapsible.init(elems, options);
+      var instances = M.Collapsible.init(elems);
     });
     this.getEvents();
-    this.getArtist();
   }
 
   render() {
@@ -68,7 +67,6 @@ export default class App extends React.Component {
       <div className="container">
         <div className="main">
           <h2>Band Radar</h2>
-          <button onClick={() => this.getUser()}>Get User</button>
           <EventsContainer
             events={this.state.events}
             getArtist={this.getArtist}
