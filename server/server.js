@@ -9,7 +9,8 @@ const fs = require('fs');
 const PORT = process.env.PORT || 3000;
 
 const cache = setupCache({
-  maxAge: 100000000
+  maxAge: 100000000,
+  exclude: { query: false }
 });
 
 const axiosInstance = axios.create({
@@ -29,7 +30,7 @@ app.get('/example', (req, res) => {
 app.get('/api/events', async (req, res) => {
   try {
     let events = await axiosInstance.get(
-      `https://app.ticketmaster.com/discovery/v2/events?apikey=${process.env.TICKETMASTER_API_KEY}&locale=*&size=20&page=0&sort=date,asc&classificationName=music&dmaId=222`
+      `https://app.ticketmaster.com/discovery/v2/events?apikey=${process.env.TICKETMASTER_API_KEY}&locale=*&size=20&page=0&sort=date,asc&source=ticketmaster&classificationName=music&dmaId=222`
     );
     events = events.data._embedded;
     res.status(200).send(events);
