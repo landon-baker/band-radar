@@ -1,11 +1,39 @@
 body {
-  background-color: aliceblue;
-  font-family: 'Open Sans', sans-serif;
+  background-color: #fff;
+  /* font-family: 'Open Sans', sans-serif; */
+  font-family: 'Apercu Light';
+}
+@font-face {
+  font-family: 'Apercu Light';
+  src: url('fonts/Apercu-Light.woff') format('woff');
+}
+
+.artistWrap {
+  background-color: rgb(230, 227, 227);
+}
+
+.logo {
+  text-align: center;
+  font-family: 'Cedarville Cursive', 'Apercu Light', 'Open Sans', sans-serif;
 }
 
 .artistLink,
 .eventPic {
   margin-right: 10px;
+  margin-left: 10px;
+}
+
+.artistLink,
+.venueLink,
+.ticketLink {
+  color: black;
+}
+
+.artistLink:hover,
+.venueLink:hover,
+.ticketLink:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .artistVenueBlock {
@@ -26,4 +54,13 @@ body {
 
 .main {
   margin-bottom: 70px;
+}
+
+.eventDate {
+  font-weight: 700;
+  font-size: 1.1em;
+  width: 30px;
+  line-height: 1.5em;
+  height: 3em;
+  word-wrap: break-word;
 }

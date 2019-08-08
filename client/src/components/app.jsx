@@ -5,7 +5,10 @@ import Login from './login';
 import EventsContainer from './eventsContainer';
 import M from 'materialize-css';
 import SpotifyPlayer from 'react-spotify-web-playback';
+import logo from '../../dist/logo.png';
 const Spotify = new SpotifyWebAPI();
+
+// 'spotify:playlist:1Bu91s9piDyAglxQqu4Icb'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,7 +20,7 @@ export default class App extends React.Component {
       params,
       events: [],
       current: '',
-      spotifyUris: ['spotify:album:0ixOUcKraH7Y3tIV1MGoRo'],
+      spotifyUris: [],
       topTracks: ''
     };
     if (this.state.loggedIn) {
@@ -44,11 +47,14 @@ export default class App extends React.Component {
       data: { events }
     } = results;
     console.log(events);
-    this.setState({ events });
+    await this.setState({ events });
+    this.getArtist(this.state.events[0]._embedded.attractions[0].name);
   }
 
-  async getArtist(e, artistQuery) {
-    e.preventDefault();
+  async getArtist(artistQuery, e) {
+    if (e) {
+      e.preventDefault();
+    }
     try {
       const result = await Spotify.searchArtists(artistQuery);
       const artist = result.artists.items[0];
@@ -68,6 +74,25 @@ export default class App extends React.Component {
     this.getEvents();
   }
 
+  // componentDidUpdate(prevState, prevProps) {
+  //   if (this.state.spotifyUris !== prevState.spotifyUris) {
+  //     console.log('updated');
+  //     this.createPlayer(this.state.spotifyUris);
+  //   }
+  // }
+
+  createPlayer(uris) {
+    return (
+      <SpotifyPlayer
+        token={this.state.params.access_token}
+        uris={uris}
+        name={'Band Radar Player'}
+        magnifySliderOnHover={false}
+        showSaveIcon={true}
+      />
+    );
+  }
+
   render() {
     if (!this.state.loggedIn) {
       return <Login />;
@@ -76,7 +101,7 @@ export default class App extends React.Component {
       <div>
         <div className="container">
           <div className="main">
-            <h2>Band Radar</h2>
+            <h2 className="logo">Band Radar</h2>
             <EventsContainer
               events={this.state.events}
               getArtist={this.getArtist}
@@ -84,10 +109,7 @@ export default class App extends React.Component {
           </div>
         </div>
         <div className="player">
-          <SpotifyPlayer
-            token={this.state.params.access_token}
-            uris={this.state.spotifyUris}
-          />
+          {this.createPlayer(this.state.spotifyUris)}
         </div>
       </div>
     );
