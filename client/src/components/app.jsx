@@ -6,7 +6,7 @@ import EventsContainer from './eventsContainer';
 import M from 'materialize-css';
 import SpotifyPlayer from 'react-spotify-web-playback';
 import logo from '../../dist/logo.png';
-import radarGif from '../../dist/assets/110.gif';
+import radarGif from '../../dist/radar.gif';
 const Spotify = new SpotifyWebAPI();
 
 // 'spotify:playlist:1Bu91s9piDyAglxQqu4Icb'
@@ -117,5 +117,6 @@ export default class App extends React.Component {
         </div>
       </div>
     );
+    // return <img className="loadingGif" src={radarGif} />;
   }
 }
