@@ -3,13 +3,9 @@ import SpotifyWebAPI from 'spotify-web-api-js';
 import axios from 'axios';
 import Login from './login';
 import EventsContainer from './eventsContainer';
-import M from 'materialize-css';
 import SpotifyPlayer from 'react-spotify-web-playback';
-import logo from '../../dist/logo.png';
 import radarGif from '../../dist/radar.gif';
 const Spotify = new SpotifyWebAPI();
-
-// 'spotify:playlist:1Bu91s9piDyAglxQqu4Icb'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -43,7 +39,7 @@ export default class App extends React.Component {
   }
 
   async getEvents() {
-    let results = await axios.get(`http://localhost:3008/api/events`);
+    let results = await axios.get(`http://landonbaker.me:4008/api/events`);
     const {
       data: { events }
     } = results;
@@ -106,6 +102,7 @@ export default class App extends React.Component {
         <div className="container">
           <div className="main">
             <h2 className="logo">Band Radar</h2>
+            <h6 className="tagLine">scope out talent headed your way</h6>
             <EventsContainer
               events={this.state.events}
               getArtist={this.getArtist}
