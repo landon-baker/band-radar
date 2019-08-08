@@ -1,5 +1,6 @@
 import React from 'react';
 import Artist from './artist';
+import { Collapsible, CollapsibleItem } from 'react-materialize';
 
 const Event = ({ event, getArtist }) => {
   const formatPrice = price => {
@@ -18,7 +19,7 @@ const Event = ({ event, getArtist }) => {
         <span className="eventDate">
           {formatDate(event.dates.start.localDate)}
         </span>
-        <img className="eventPic" src={event.images[0].url} width="100"></img>
+        <img className="eventPic" src={event.images[0].url} width="130"></img>
         <p className="artistVenueBlock">
           {event.name} <br></br>
           <a className="venueLink" href={event._embedded.venues[0].url}>

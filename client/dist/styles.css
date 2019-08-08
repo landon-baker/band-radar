@@ -1,7 +1,6 @@
 body {
   background-color: #fff;
-  /* font-family: 'Open Sans', sans-serif; */
-  font-family: 'Apercu Light';
+  font-family: 'Apercu Light', sans-serif;
 }
 @font-face {
   font-family: 'Apercu Light';
@@ -14,7 +13,7 @@ body {
 
 .logo {
   text-align: center;
-  font-family: 'Cedarville Cursive', 'Apercu Light', 'Open Sans', sans-serif;
+  font-family: 'IM Fell DW Pica SC', 'Apercu Light', 'Open Sans', sans-serif;
 }
 
 .artistLink,
@@ -57,10 +56,20 @@ body {
 }
 
 .eventDate {
-  font-weight: 700;
+  font-weight: 900;
   font-size: 1.1em;
   width: 30px;
   line-height: 1.5em;
   height: 3em;
   word-wrap: break-word;
+}
+.logout {
+  float: right;
+  margin-right: 30px;
+}
+
+.loadingGif {
+  position: fixed;
+  top: 50%;
+  left: 50%;
 }

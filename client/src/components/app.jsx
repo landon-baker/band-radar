@@ -6,6 +6,7 @@ import EventsContainer from './eventsContainer';
 import M from 'materialize-css';
 import SpotifyPlayer from 'react-spotify-web-playback';
 import logo from '../../dist/logo.png';
+import radarGif from '../../dist/assets/110.gif';
 const Spotify = new SpotifyWebAPI();
 
 // 'spotify:playlist:1Bu91s9piDyAglxQqu4Icb'
@@ -67,19 +68,8 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.collapsible');
-      var instances = M.Collapsible.init(elems);
-    });
     this.getEvents();
   }
-
-  // componentDidUpdate(prevState, prevProps) {
-  //   if (this.state.spotifyUris !== prevState.spotifyUris) {
-  //     console.log('updated');
-  //     this.createPlayer(this.state.spotifyUris);
-  //   }
-  // }
 
   createPlayer(uris) {
     return (
@@ -89,6 +79,8 @@ export default class App extends React.Component {
         name={'Band Radar Player'}
         magnifySliderOnHover={false}
         showSaveIcon={true}
+        autoPlay={false}
+        play={false}
       />
     );
   }
@@ -97,8 +89,20 @@ export default class App extends React.Component {
     if (!this.state.loggedIn) {
       return <Login />;
     }
+    if (this.state.events.length === 0) {
+      return <img className="loadingGif" src={radarGif} />;
+    }
     return (
       <div>
+        <form
+          className="logout"
+          action="https://spotify.com/logout"
+          method="get"
+        >
+          <button className="btn" type="submit">
+            Logout
+          </button>
+        </form>
         <div className="container">
           <div className="main">
             <h2 className="logo">Band Radar</h2>
