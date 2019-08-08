@@ -21,7 +21,7 @@ const Event = ({ event, getArtist }) => {
         </span>
         <img className="eventPic" src={event.images[0].url} width="130"></img>
         <p className="artistVenueBlock">
-          {event.name} <br></br>
+          <span className="eventName">{event.name}</span> <br></br>
           <a className="venueLink" href={event._embedded.venues[0].url}>
             {event._embedded.venues[0].name}
           </a>
