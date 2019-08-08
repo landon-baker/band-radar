@@ -10,7 +10,7 @@ node_modules
 .prettierrc
 
 ## environment ##
-.env
+*.env
 
 ## bundle ##
 client/dist/bundle.js
