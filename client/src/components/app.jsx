@@ -86,7 +86,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (!this.state.loggedIn) {
+    if (!this.state.loggedIn && this.state.events.length > 0) {
       return <Login />;
     }
     if (this.state.events.length === 0) {
@@ -117,6 +117,5 @@ export default class App extends React.Component {
         </div>
       </div>
     );
-    // return <img className="loadingGif" src={radarGif} />;
   }
 }

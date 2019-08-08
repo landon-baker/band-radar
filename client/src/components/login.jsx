@@ -2,7 +2,7 @@ import React from 'react';
 
 const Login = () => {
   return (
-    <div className="login">
+    <div className="container">
       <div className="row">
         <h3>Welcome to Band Radar!</h3>
         <h4>Get started by clicking the button below to login with Spotify</h4>

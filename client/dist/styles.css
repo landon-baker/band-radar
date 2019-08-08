@@ -24,13 +24,15 @@ body {
 
 .artistLink,
 .venueLink,
-.ticketLink {
+.ticketLink,
+.footerLink {
   color: black;
 }
 
 .artistLink:hover,
 .venueLink:hover,
-.ticketLink:hover {
+.ticketLink:hover,
+.footerLink:hover {
   cursor: pointer;
   text-decoration: underline;
 }
@@ -48,7 +50,8 @@ body {
 .player {
   position: fixed;
   bottom: 0px;
-  width: 100%;
+  right: 10%;
+  width: 80%;
 }
 
 .main {
