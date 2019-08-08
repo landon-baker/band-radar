@@ -39,7 +39,7 @@ export default class App extends React.Component {
   }
 
   async getEvents() {
-    let results = await axios.get(`http://landonbaker.me:4008/api/events`);
+    let results = await axios.get(`http://localhost:3008/api/events`);
     const {
       data: { events }
     } = results;

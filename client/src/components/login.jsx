@@ -7,7 +7,7 @@ const Login = () => {
         <h3>Welcome to Band Radar!</h3>
         <h4>Get started by clicking the button below to login with Spotify</h4>
         <div className="row">
-          <form action="http://landonbaker.me:3888/login" method="get">
+          <form action="http://localhost:8888/login" method="get">
             <button className="btn" type="submit">
               Login
             </button>

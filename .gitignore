@@ -17,3 +17,6 @@ client/dist/bundle.js
 
 server/data.json
 data.json
+
+spotifyAuthServer/node_modules
+spotifyAuthServer/*.env
