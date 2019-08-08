@@ -4,17 +4,21 @@ import axios from 'axios';
 import Login from './login';
 import EventsContainer from './eventsContainer';
 import M from 'materialize-css';
+import SpotifyPlayer from 'react-spotify-web-playback';
 const Spotify = new SpotifyWebAPI();
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     const params = this.getHashParams();
-    window.spotifyToken = params.access_token;
     this.state = {
       loggedIn: !!params.access_token,
       artist: '',
-      events: []
+      params,
+      events: [],
+      current: '',
+      spotifyUris: ['spotify:album:0ixOUcKraH7Y3tIV1MGoRo'],
+      topTracks: ''
     };
     if (this.state.loggedIn) {
       Spotify.setAccessToken(params.access_token);
@@ -30,6 +34,7 @@ export default class App extends React.Component {
     while ((e = r.exec(q))) {
       hashParams[e[1]] = decodeURIComponent(e[2]);
     }
+    // window.location.hash = '';
     return hashParams;
   }
 
@@ -38,6 +43,7 @@ export default class App extends React.Component {
     const {
       data: { events }
     } = results;
+    console.log(events);
     this.setState({ events });
   }
 
@@ -46,7 +52,9 @@ export default class App extends React.Component {
     try {
       const result = await Spotify.searchArtists(artistQuery);
       const artist = result.artists.items[0];
-      this.setState({ artist });
+      const topTracks = await Spotify.getArtistTopTracks(artist.id, 'US');
+      const spotifyUris = topTracks.tracks.map(track => track.uri);
+      this.setState({ artist, spotifyUris });
     } catch (err) {
       console.log(err);
     }
@@ -65,12 +73,20 @@ export default class App extends React.Component {
       return <Login />;
     }
     return (
-      <div className="container">
-        <div className="main">
-          <h2>Band Radar</h2>
-          <EventsContainer
-            events={this.state.events}
-            getArtist={this.getArtist}
+      <div>
+        <div className="container">
+          <div className="main">
+            <h2>Band Radar</h2>
+            <EventsContainer
+              events={this.state.events}
+              getArtist={this.getArtist}
+            />
+          </div>
+        </div>
+        <div className="player">
+          <SpotifyPlayer
+            token={this.state.params.access_token}
+            uris={this.state.spotifyUris}
           />
         </div>
       </div>

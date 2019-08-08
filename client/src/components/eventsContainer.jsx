@@ -5,7 +5,7 @@ const EventsContainer = ({ events, getArtist }) => {
   return (
     <ul className="collapsible">
       {events.map(event => (
-        <Event event={event} getArtist={getArtist} />
+        <Event key={event.id} event={event} getArtist={getArtist} />
       ))}
     </ul>
   );

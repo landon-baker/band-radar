@@ -17,3 +17,13 @@ body {
   position: absolute;
   right: 200px;
 }
+
+.player {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}
+
+.main {
+  margin-bottom: 70px;
+}
