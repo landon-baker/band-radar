@@ -1,6 +1,5 @@
 import React from 'react';
 import Artist from './artist';
-import { Collapsible, CollapsibleItem } from 'react-materialize';
 
 const Event = ({ event, getArtist }) => {
   const formatPrice = price => {
@@ -13,6 +12,7 @@ const Event = ({ event, getArtist }) => {
     date = date.split('-');
     return `${date[1]}/${date[2]}`;
   };
+
   return (
     <li className="avatar">
       <div className="collapsible-header">
