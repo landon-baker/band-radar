@@ -75,7 +75,7 @@ export default class App extends React.Component {
         magnifySliderOnHover={false}
         showSaveIcon={true}
         autoPlay={false}
-        play={true}
+        play={false}
       />
     );
   }
