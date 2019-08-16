@@ -17,7 +17,7 @@ export default class App extends React.Component {
       params,
       events: [],
       current: '',
-      spotifyUris: [],
+      spotifyUris: ['spotify:track:7N3GMSm1tFbfy35YKxnbL0'],
       topTracks: ''
     };
     if (this.state.loggedIn) {
@@ -56,7 +56,7 @@ export default class App extends React.Component {
       const artist = result.artists.items[0];
       const topTracks = await Spotify.getArtistTopTracks(artist.id, 'US');
       const spotifyUris = topTracks.tracks.map(track => track.uri);
-      this.setState({ artist, spotifyUris });
+      this.setState({ artist, spotifyUris }).then(this.createPlayer());
     } catch (err) {
       console.log(err);
     }
@@ -75,7 +75,7 @@ export default class App extends React.Component {
         magnifySliderOnHover={false}
         showSaveIcon={true}
         autoPlay={false}
-        play={false}
+        play={true}
       />
     );
   }
