@@ -77,9 +77,7 @@ export default class App extends React.Component {
         autoPlay={false}
         play={false}
         callback={needsUpdate => {
-          if (needsUpdate) {
-            console.log('should play now');
-          }
+          console.log(arguments);
         }}
       />
     );
