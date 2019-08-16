@@ -76,8 +76,10 @@ export default class App extends React.Component {
         showSaveIcon={true}
         autoPlay={false}
         play={false}
-        callback={(...args) => {
-          console.log(args);
+        callback={({ needsUpdate }) => {
+          if (needsUpdate) {
+            console.log('updateNeeded');
+          }
         }}
       />
     );
