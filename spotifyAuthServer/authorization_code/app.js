@@ -9,6 +9,8 @@
 require("dotenv").config();
 var express = require("express"); // Express web server framework
 var request = require("request"); // "Request" library
+const https = require('https');
+const fs = require('fs');
 var cors = require("cors");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
@@ -16,6 +18,11 @@ var cookieParser = require("cookie-parser");
 var client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
 var redirect_uri = process.env.SPOTIFY_REDIRECT_URI; // Your redirect uri
+
+const httpsOptions = {
+	key: fs.readFileSync('/etc/letsencrypt/live/landonbaker.me/privkey.pem'),
+	cert: fs.readFileSync('/etc/letsencrypt/live/landonbaker.me/fullchain.pem')
+}
 
 /**
  * Generates a random string containing numbers and letters
@@ -42,7 +49,7 @@ app
   .use(cors())
   .use(cookieParser());
 
-app.get("/login", function(req, res) {
+app.get("/spotify/login", function(req, res) {
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -62,7 +69,7 @@ app.get("/login", function(req, res) {
   );
 });
 
-app.get("/callback", function(req, res) {
+app.get("/spotify/callback", function(req, res) {
   // your application requests refresh and access tokens
   // after checking the state parameter
 
@@ -130,7 +137,7 @@ app.get("/callback", function(req, res) {
   }
 });
 
-app.get("/refresh_token", function(req, res) {
+app.get("/spotify/refresh_token", function(req, res) {
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
   var authOptions = {
@@ -157,5 +164,6 @@ app.get("/refresh_token", function(req, res) {
   });
 });
 
-console.log("Listening on 8888");
-app.listen(8888);
+https.createServer(httpsOptions, app).listen(8888, () => console.log('Spotify Auth Server running with https on 8888'))
+//console.log("Listening on 8888");
+//app.listen(8888);

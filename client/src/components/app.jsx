@@ -34,16 +34,15 @@ export default class App extends React.Component {
     while ((e = r.exec(q))) {
       hashParams[e[1]] = decodeURIComponent(e[2]);
     }
-    // window.location.hash = '';
+    window.location.hash = '';
     return hashParams;
   }
 
   async getEvents() {
-    let results = await axios.get(`http://localhost:3008/api/events`);
+    let results = await axios.get(`/projects/bandradar/api/events`);
     const {
       data: { events }
     } = results;
-    console.log(events);
     await this.setState({ events });
     this.getArtist(this.state.events[0]._embedded.attractions[0].name);
   }
