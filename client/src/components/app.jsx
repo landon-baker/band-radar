@@ -56,7 +56,7 @@ export default class App extends React.Component {
       const artist = result.artists.items[0];
       const topTracks = await Spotify.getArtistTopTracks(artist.id, 'US');
       const spotifyUris = topTracks.tracks.map(track => track.uri);
-      this.setState({ artist, spotifyUris }).then(this.createPlayer());
+      this.setState({ artist, spotifyUris });
     } catch (err) {
       console.log(err);
     }
