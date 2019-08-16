@@ -17,7 +17,7 @@ export default class App extends React.Component {
       params,
       events: [],
       current: '',
-      spotifyUris: ['spotify:track:7N3GMSm1tFbfy35YKxnbL0'],
+      spotifyUris: [],
       topTracks: ''
     };
     if (this.state.loggedIn) {
@@ -76,8 +76,8 @@ export default class App extends React.Component {
         showSaveIcon={true}
         autoPlay={false}
         play={false}
-        callback={needsUpdate => {
-          console.log(arguments);
+        callback={(...args) => {
+          console.log(args);
         }}
       />
     );
