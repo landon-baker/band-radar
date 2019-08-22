@@ -19,15 +19,18 @@ const axiosInstance = axios.create({
 });
 
 const options = {
-	cert: fs.readFileSync('/etc/letsencrypt/live/landonbaker.me/fullchain.pem'),
-	key: fs.readFileSync('/etc/letsencrypt/live/landonbaker.me/privkey.pem')
-}
+  cert: fs.readFileSync('/etc/letsencrypt/live/landonbaker.me/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/landonbaker.me/privkey.pem')
+};
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/projects/bandradar', express.static(path.join(__dirname, '../client/dist')));
+app.use(
+  '/projects/bandradar',
+  express.static(path.join(__dirname, '../client/dist'))
+);
 
 app.get('/projects/bandradar/api/events', async (req, res) => {
   try {
@@ -41,6 +44,7 @@ app.get('/projects/bandradar/api/events', async (req, res) => {
   }
 });
 
-
-https.createServer(options, app).listen(PORT, () => console.log(`running with https on port ${PORT}`)); 
-//app.listen(PORT, () => console.log(`Up and running on port ${PORT}`));
+https
+  .createServer(options, app)
+  .listen(PORT, () => console.log(`running with https on port ${PORT}`));
+// app.listen(PORT, () => console.log(`Up and running on port ${PORT}`));
