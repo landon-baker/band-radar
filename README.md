@@ -2,7 +2,11 @@
 # ![](https://i.imgur.com/WfanTcU.png)
 
 ## About 
-[*Band Radar*](https://landonbaker.me/projects/bandradar) is a 2-day MVP project that allows users to browse upcoming local concerts through TicketMaster and play artists' top tracks with Spotify player integration.
+If you love discovering new artists and seeing live music, [*Band Radar*](https://landonbaker.me/projects/bandradar) is the app for you! Band Radar shows a list of upcoming local artists and allows you to browse their top tracks on Spotify without navigating away from the page. The app allows you to listen to all artists that will be performing, including opening acts (if applicable). You can also see high level details about the show including the date, venue, and ticket price range. If you decide you would like to buy a ticket, simply click the link to be taken to Ticketmaster's event page. 
+
+Band Radar was intended for the user that enjoys attending live shows, but doesn't love the hassle of having to separately look up artists that may be unfamiliar. Band Radar's intuitive design allows users to quickly navigate between many different artists they are interested in listening to.
+
+Band Radar was developed in a 2-day timeframe by a solo developer (Landon Baker) as an MVP project focused on rapid development.
 
 ## Initial Implementation
 This application was an exercise in rapid development to see what could be accomplished in a very limited timeframe of 2 days. The following user stories were successfully implemented in the initial timeframe:
@@ -16,8 +20,12 @@ This application was an exercise in rapid development to see what could be accom
  * As a user, I want to be able to save the current song in my Spotify Saved Tracks
  
 ## Future Vision
-
+Band Radar's initial 2-day implementation was successful, however with more time to devote to the application, here are some future visions that could significantly enhance user experience:
+ * Allow users to input cities of interest rather than only showing concerts in the Austin metro area
+ * Default location to users current city
+ * Implement a genre feature to allow users to filter shows
+ * Incorporate additional concert API's
 
 ## Technologies
-Band Radar was primarily built with React and Node/Express. Other technologies include Docker, Nginx, Digital Ocean, Axios, Babel, and Webpack.
+Band Radar was primarily built with React on the front end and Node/Express on the back end. Other technologies include Docker, Nginx, Digital Ocean, Axios, Babel, and Webpack.
 
