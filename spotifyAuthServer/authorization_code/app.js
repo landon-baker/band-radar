@@ -6,23 +6,23 @@
  * For more information, read
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
-require("dotenv").config();
-var express = require("express"); // Express web server framework
-var request = require("request"); // "Request" library
+require('dotenv').config();
+var express = require('express'); // Express web server framework
+var request = require('request'); // "Request" library
 const https = require('https');
 const fs = require('fs');
-var cors = require("cors");
-var querystring = require("querystring");
-var cookieParser = require("cookie-parser");
+var cors = require('cors');
+var querystring = require('querystring');
+var cookieParser = require('cookie-parser');
 
 var client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
 var redirect_uri = process.env.SPOTIFY_REDIRECT_URI; // Your redirect uri
 
 const httpsOptions = {
-	key: fs.readFileSync('/etc/letsencrypt/live/landonbaker.me/privkey.pem'),
-	cert: fs.readFileSync('/etc/letsencrypt/live/landonbaker.me/fullchain.pem')
-}
+  key: fs.readFileSync('/etc/letsencrypt/live/landonbaker.me/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/landonbaker.me/fullchain.pem')
+};
 
 /**
  * Generates a random string containing numbers and letters
@@ -30,9 +30,9 @@ const httpsOptions = {
  * @return {string} The generated string
  */
 var generateRandomString = function(length) {
-  var text = "";
+  var text = '';
   var possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   for (var i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -40,36 +40,36 @@ var generateRandomString = function(length) {
   return text;
 };
 
-var stateKey = "spotify_auth_state";
+var stateKey = 'spotify_auth_state';
 
 var app = express();
 
 app
-  .use(express.static(__dirname + "/public"))
+  .use(express.static(__dirname + '/public'))
   .use(cors())
   .use(cookieParser());
 
-app.get("/spotify/login", function(req, res) {
+app.get('/spotify/login', function(req, res) {
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
   // your application requests authorization
   var scope =
-    "user-read-private user-read-email streaming user-modify-playback-state user-read-playback-state playlist-modify-public user-library-read user-library-modify";
+    'user-read-private user-read-email streaming user-modify-playback-state user-read-playback-state playlist-modify-public user-library-read user-library-modify';
   res.redirect(
-    "https://accounts.spotify.com/authorize?" +
+    'https://accounts.spotify.com/authorize?' +
       querystring.stringify({
-        response_type: "code",
+        response_type: 'code',
         client_id: client_id,
         scope: scope,
         redirect_uri: redirect_uri,
         state: state,
-        show_dialog: true
+        show_dialog: false
       })
   );
 });
 
-app.get("/spotify/callback", function(req, res) {
+app.get('/spotify/callback', function(req, res) {
   // your application requests refresh and access tokens
   // after checking the state parameter
 
@@ -79,24 +79,24 @@ app.get("/spotify/callback", function(req, res) {
 
   if (state === null || state !== storedState) {
     res.redirect(
-      "/#" +
+      '/#' +
         querystring.stringify({
-          error: "state_mismatch"
+          error: 'state_mismatch'
         })
     );
   } else {
     res.clearCookie(stateKey);
     var authOptions = {
-      url: "https://accounts.spotify.com/api/token",
+      url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
         redirect_uri: redirect_uri,
-        grant_type: "authorization_code"
+        grant_type: 'authorization_code'
       },
       headers: {
         Authorization:
-          "Basic " +
-          new Buffer(client_id + ":" + client_secret).toString("base64")
+          'Basic ' +
+          new Buffer(client_id + ':' + client_secret).toString('base64')
       },
       json: true
     };
@@ -107,8 +107,8 @@ app.get("/spotify/callback", function(req, res) {
           refresh_token = body.refresh_token;
 
         var options = {
-          url: "https://api.spotify.com/v1/me",
-          headers: { Authorization: "Bearer " + access_token },
+          url: 'https://api.spotify.com/v1/me',
+          headers: { Authorization: 'Bearer ' + access_token },
           json: true
         };
 
@@ -127,9 +127,9 @@ app.get("/spotify/callback", function(req, res) {
         );
       } else {
         res.redirect(
-          "/#" +
+          '/#' +
             querystring.stringify({
-              error: "invalid_token"
+              error: 'invalid_token'
             })
         );
       }
@@ -137,18 +137,18 @@ app.get("/spotify/callback", function(req, res) {
   }
 });
 
-app.get("/spotify/refresh_token", function(req, res) {
+app.get('/spotify/refresh_token', function(req, res) {
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
   var authOptions = {
-    url: "https://accounts.spotify.com/api/token",
+    url: 'https://accounts.spotify.com/api/token',
     headers: {
       Authorization:
-        "Basic " +
-        new Buffer(client_id + ":" + client_secret).toString("base64")
+        'Basic ' +
+        new Buffer(client_id + ':' + client_secret).toString('base64')
     },
     form: {
-      grant_type: "refresh_token",
+      grant_type: 'refresh_token',
       refresh_token: refresh_token
     },
     json: true
@@ -164,6 +164,10 @@ app.get("/spotify/refresh_token", function(req, res) {
   });
 });
 
-https.createServer(httpsOptions, app).listen(8888, () => console.log('Spotify Auth Server running with https on 8888'))
-//console.log("Listening on 8888");
-//app.listen(8888);
+https
+  .createServer(httpsOptions, app)
+  .listen(8888, () =>
+    console.log('Spotify Auth Server running with https on 8888')
+  );
+// console.log('Listening on 8888');
+// app.listen(8888);
