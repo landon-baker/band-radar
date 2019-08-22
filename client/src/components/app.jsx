@@ -74,14 +74,8 @@ export default class App extends React.Component {
         name={'Band Radar Player'}
         magnifySliderOnHover={false}
         showSaveIcon={true}
-        autoPlay={false}
+        autoPlay={true}
         play={false}
-        callback={state => {
-          console.log(state);
-          if (state.needsUpdate) {
-            console.log('updateNeeded');
-          }
-        }}
       />
     );
   }
